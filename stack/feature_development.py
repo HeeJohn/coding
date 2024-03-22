@@ -26,7 +26,7 @@
 
 # 따라서 5일째에 1개의 기능, 10일째에 3개의 기능, 20일째에 2개의 기능이 배포됩니다.
 
-# ※ 공지 - 2020년 7월 14일 테스트케이스가 추가되었습니다.
+
 from math import ceil
 
 def solution(progresses, speeds):
@@ -51,11 +51,37 @@ def solution(progresses, speeds):
 
     return answer
 
-progresses= [93, 30, 55]
-speeds = [1,30, 5 ]
+
+####################################### 반례 #################################################
+# from math import ceil
+
+# def solution(progresses, speeds):
+#     day_list =[]
+#     answer= []
+
+#     for i  in range( len(progresses)):
+#         left = 100 - progresses[i]
+#         left_day = ceil(left / speeds[i])
+#         day_list.append(left_day) #day left to finish the task
+
+#     prev =0
+
+#     while day_list :
+#        current = day_list.pop(0)
+#        if prev > current : # 이 부분 주의. 남은 날짜가 같은 경우에도 함께 처리되어야 함.
+#            answer[-1]+=1
+#        else :
+#            answer.append(1)
+#            prev = current
+
+#     return answer
 
 
-print(solution(progresses, speeds))
+# progresses= [97, 97, 97]
+# speeds = [1,1, 1 ]
+
+
+# print(solution(progresses, speeds))
 
 
 
