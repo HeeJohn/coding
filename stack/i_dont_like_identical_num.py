@@ -36,21 +36,25 @@
 
 
 
-#solution2 - 
+# #solution2 - 
 
-def solution(arr):
-    answer=[arr[0]]
+# def solution(arr):
+#     answer=[arr[0]]
   
-    for i in range(1, len(arr)):
-        last = answer[-1]
-        if last != arr[i] :
-            print(arr[i])
-            answer.append(arr[i])
-    return answer
+#     for i in range(1, len(arr)):
+#         last = answer[-1]
+#         if last != arr[i] :
+#             print(arr[i])
+#             answer.append(arr[i])
+#     return answer
 
 
-arr= [1,1,3,3,0,1,1]
+# arr= [1,1,3,3,0,1,1]
 
-arr1 = [4,4,4,3,3]
+# arr1 = [4,4,4,3,3]
 
-print(solution(arr))
+# print(solution(arr))
+
+
+
+

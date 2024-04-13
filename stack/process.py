@@ -71,7 +71,38 @@ def solution(priorities, location):
 #                 break
 #     return answer
 
-            
+
+## 중요한 포인트는 나의 우선순위보다 큰 프로세스, 같은 프로세스들이다.
+# 나보다 큰 프로세스 먼저 제거하고, (카운트)
+# 그 다음 프로세스의 인덱스
+def solution(priorities, location):
+    prior_dict = [(key, value) for key, value in enumerate(priorities)]
+    count = 1
+
+    while priorities:
+        current = prior_dict.pop(0)
+        if current[1] < max(priorities):
+            prior_dict.append(current)
+        else:
+            if current[0] == location:
+                return count
+            else:
+                priorities.pop(current[0])
+                count += 1
+    return count
+
+ 
+def hasBiggerDegit(target, priorities) :
+    for priority in priorities :
+        if target < priority :
+            return True
     
-   
-                
+    return False
+
+
+priorities = [2, 1, 3, 2]
+location = 2
+solution(priorities,location)
+priorities =[1, 1, 9, 1, 1, 1]
+location = 0
+solution(priorities,location)

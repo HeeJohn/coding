@@ -85,6 +85,31 @@ def solution(progresses, speeds):
 
 
 
+import math
 
+def solution(progresses, speeds):
+    max_progress = 100
+    day_passed = 0
+    job_finished = 1
+    answer = []
+    
+    answer.append(job_finished) # 첫번째 프로세스는 무조건 들어감.
+    
+    for i, progress in enumerate(progresses):
+        left = max_progress - progress
+        time_takes = math.ceil(left / speeds[i])
+        
+        if day_passed >= time_takes:
+            answer[-1] += 1
+        else:
+            job_finished = 1
+            answer.append(job_finished)
+            day_passed = time_takes
+            
+    return answer
+
+progresses = [93, 30, 55]
+speeds = [1, 30, 5]
+print(solution(progresses, speeds))
 
 
