@@ -53,6 +53,40 @@ def solution(bridge_length, weight, truck_weights):
     return second + bridge_length
 
 
+
+
+# 경우의 수
+# 개수는 꽉 찰 수가 없음, 조건을 비교하기 전에 무조건 하나는 빠지고 시작.
+# 들어가려는 트럭과 있는 트럭이 기준 무게를 초과하지 않음. --> 대기 트럭에서 하나 들어감.
+# 들어가려는 트럭과 있는 트럭의 합이 기준 무게를 초과함. --> 무게가 0인 트럭이 들어감. 
+
+def solution(bridge_length, weight, truck_weights):
+    bridge = [0] * (bridge_length-1)
+    
+    incoming_truck = truck_weights.pop(0)
+    current_weight = incoming_truck
+    
+    bridge.append(incoming_truck)
+    second =1
+    
+    while current_weight > 0 :
+        #1초 후에는 무조건 하나 앞으로 전진
+        current_weight -= bridge.pop(0)
+        second+=1
+
+        if truck_weights and (current_weight + truck_weights[0]) <= weight :
+            incoming_truck = truck_weights.pop(0)
+            bridge.append(incoming_truck)
+            current_weight+=incoming_truck
+        else : 
+            bridge.append(0)
+            
+    return second
+
+
+
+
+
 #test case 1
 bridge_length1 =2
 weight1 =10
