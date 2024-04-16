@@ -14,49 +14,54 @@
 # 4초 시점의 ₩2은 1초간 가격이 떨어지지 않았습니다.
 # 5초 시점의 ₩3은 0초간 가격이 떨어지지 않았습니다.
 
+# 첫번째 풀이
+# def solution(prices):
+#     stack= [0] 
+#     answer = [0] * len(prices)
+#     counter =1
+#     for i in range(1, len(prices)) :
+#             if prices[stack[-1]] <= prices[i] :
+#                  stack.append(i)
+#                  counter =1
+#             else :
+#                 while stack and  prices[stack[-1]]  > prices[i] :
+#                     answer [stack.pop()] = counter
+#                     counter+=1
+#                 stack.append(i)    
+
+#     while stack :
+#          index = stack.pop()
+#          answer[index ] = len(prices) - index -1
+
+#     return answer
+
+
 
 def solution(prices):
-    stack= [0] 
-    answer = [0] * len(prices)
-    counter =1
-    for i in range(1, len(prices)) :
-            if prices[stack[-1]] <= prices[i] :
-                 stack.append(i)
-                 counter =1
-            else :
-                while stack and  prices[stack[-1]]  > prices[i] :
-                    answer [stack.pop()] = counter
-                    counter+=1
-                stack.append(i)    
 
-    while stack :
-         index = stack.pop()
-         answer[index ] = len(prices) - index -1
+    second = [0] * len(prices)
+    stack = []
+    for i in range(len(prices)):
+        for price,index in stack:
+            second[index] += 1
+        while stack and stack[-1][0] > prices[i]:
+            stack.pop()
+        stack.append((prices[i], i))
 
-    return answer
-
-# def solution(prices):
-
-#     times = [0] * len(prices)
-#     stack = []
-#     for i in range(len(prices)):
-#         for s,idx in stack:
-#             times[idx] += 1
-#         while stack and stack[-1][0] > prices[i]:
-#             stack.pop()
-#         stack.append((prices[i], i))
-
-#     return times
+    return second
 
 
 prices=[1, 2, 3, 2, 3]
-expected = [4,3,1,2,1]
+# expected = [4,3,1,2,1]
 
-prices3 = [3, 2, 4, 1, 1]
-# [1, 2, 1, 1, 0]
+# prices3 = [3, 2, 4, 1, 1]
+# # [1, 2, 1, 1, 0]
+
 prices1=[1,2,2,1,3,1,2]
 expected1 = [7,2,1,4,]
-print(prices3)
-print(solution(prices3))
-# print(prices1)
-# print(solution(prices1))
+
+
+print(solution(prices))
+
+print(solution(prices1))
+

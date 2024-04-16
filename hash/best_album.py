@@ -46,16 +46,18 @@ def solution(genres, plays):
             # array 비교
             array = category_array[category]
 
-            array.append(index)
-            
-            for i in range(len(array)-1) :
-                max = i
-                for j in range(i+1,len(array)) :
-                    if plays[array[max]] < plays[array[j]] : # 같은 경우는 스왑 x 더 작은 인덱스가 살아 남음.
-                        max = j 
-                array[i], array[max] = array[max], array[i] # swap
-
-            if len(array) > 2 : array.pop()
+            # 스택 크기가 2가 아닐 때 무조건 삽입
+            if len(array) < 2 :
+                array.append(index)
+                continue  
+        
+            for i in range(2) :
+                # 고유번호가 낮은 순서대로 index 값이 커지기 때문에 
+                # 재생 수가 원래 있는 것보다 작거나, 같으면 원본을 유지.
+                if plays[array[i]] < plays[index] : 
+                    array.insert(i, index)
+                    array.pop()
+                    break
 
             category_array[category]= array
             category_sum[category] += plays[index]
