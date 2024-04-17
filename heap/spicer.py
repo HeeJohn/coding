@@ -39,6 +39,8 @@
 
 # 0 1 2 3 4 5 7
 
+
+## 첫번째 코드
 import heapq
 
 def scov(a,b):
@@ -60,6 +62,32 @@ def solution(scoville, K):
     if len(scoville)==1 and scoville[0]<K:
         return -1
     return c  
+
+
+
+import heapq
+# 모든 음식의 스코빌 지수를 k 이상으로 만들기 
+# k 이상으로 만들기 위해 스코빌 지수가 가장 낮은 두개의 음식을 섞기 
+# 섞은 음식의 스코빌 지수 = 가장 맵지 않은 음식의 스코빌 지수 + (두번째로 맵지 않은 음식의 스코빌 지수 *2)  
+def scovify(first, second) : return first + second*2
+
+def solution(scoville, K):
+    heapq.heapify(scoville)
+    count =0
+    
+    while scoville[0] < K :
+        if len(scoville) < 2 :
+            return -1
+        first = heapq.heappop(scoville)
+        second = heapq.heappop(scoville)
+        heapq.heappush(scoville, scovify(first,second))
+        count+=1
+    
+    return count
+
+
+
+
 
 
 heap = [0,1,2,3,4,5,6]
