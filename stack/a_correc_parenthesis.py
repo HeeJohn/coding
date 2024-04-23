@@ -1,23 +1,24 @@
-# Description
-# The definition of correctly paired parentheses means that if it is opened with a '(' character, it must be closed with a ')' character.
-# For instance,
+"""
+Description
+The definition of correctly paired parentheses means that if it is opened with a '(' character, it must be closed with a ')' character.
+For instance,
 
-# "()()" or "(())()" is a correct parenthesis.
-# ")()(" or "(()(" is an incorrect parenthesis.
-# Given a string s consisting only of '(' or ')', complete a solution function that returns true if the string s is the correct parenthesis and false if it is not.
+"()()" or "(())()" is a correct parenthesis.
+")()(" or "(()(" is an incorrect parenthesis.
+Given a string s consisting only of '(' or ')', complete a solution function that returns true if the string s is the correct parenthesis and false if it is not.
 
-# Constraints
-# Length of string s: natural number less than 100,000
-# The string s consists of only '(' or ')'.
-# Example
-# s	answer
-# "()()"	true
-# "(())()"	true
-# ")()("	false
-# "(()("	false
-# Example #1
+Constraints
+Length of string s: natural number less than 100,000
+The string s consists of only '(' or ')'.
+Example
+s	answer
+"()()"	true
+"(())()"	true
+")()("	false
+"(()("	false
+Example #1
 
-# Same as above example.
+Same as above example."""
 
 
 def solution(s):
