@@ -84,8 +84,6 @@ def solution(k, dungeons):
     return enterDungeon(k, dungeons, count)
 
 
-
-
 # - **시간복잡도**
 #     - n개 중에 조건이 만족하는 던전 하나를 골라 탐험.
 #         - n-1개의 던전 중 최소 피로도 조건을 만족하는 던전을 탐험.
