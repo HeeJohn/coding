@@ -37,41 +37,39 @@ numbers	return
 
 
 
+
+
 def isPrime(num) :
     if num == 1 : return False
     if num ==2 : return True
+
     for i in range(2,num) :
         if num % i == 0 : return False
     return True
 
 
-def selectNum(numbers, criteria, count):
+def selectNum(numbers, criteria, primes):
     if not numbers:  # 재귀함수 탈출 조건
-        return count
-
+        return primes
     for i in range(len(numbers)):
-        num = criteria + numbers[i]  # 숫자 이어붙임
-        if isPrime(int(num)):  # 소수인지 확인
-            count = selectNum(numbers[:i] + numbers[i + 1:], num, count + 1)  # 소수일시 카운트
-        else:
-            count = selectNum(numbers[:i] + numbers[i + 1:], num, count)  # 소수아니면 카운트 x
-    return count
+        str_num = criteria + numbers[i]  # 숫자 이어붙임
+        int_num = int(str_num)
+
+        if isPrime(int_num):  # 소수인지 확인
+            primes.append(int_num)
+        primes = selectNum(numbers[:i] + numbers[i+1:], str_num, primes)
+    return primes
 
 def solution(numbers):
     nums = list(numbers)  # 문자열을 리스트로 변환
-    count = 0
-    for criteria in set(nums):
-        if criteria == '0':
-            continue
-        nums.remove(criteria)
-        if isPrime(int(criteria)):
-            count = selectNum(nums, criteria, count + 1)
-        else:
-            count = selectNum(nums, criteria, count)
-        nums.append(criteria)
-    return count
+    primes = []
+    primes = selectNum(nums, '', primes)
+    return len(set(primes))
+
 
 
 # 예시 테스트
 
-print(solution("121"))  # 출력: 2
+print(solution("011"))  # 출력: 2
+# 2, 11, 211, 
+
