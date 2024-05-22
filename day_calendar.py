@@ -1,105 +1,308 @@
-def is_weekend(day):
-    return day == '일' or day == '토'
+def is_weekend(d) :
+    if d == '일' or d == '토' :
+        return True
+    else :
+        return False
 
-def is_holiday(holidays, today):
-    return today in holidays
+def is_holiday(H, today) :
+    if  today in H :
+        return True
+    else :
+        return False
 
-def is_normalday(holidays, today, current_day):
-    return not (is_weekend(current_day) or is_holiday(holidays, today))
+def is_normalday(H, today, X) :
+    if not(is_weekend(X) or  is_holiday(H, today)) :
+        return True
+    else :
+        return False
 
-def find_alternate_day(month, date, days, current_day_idx, holidays, last_days_of_months):
+# def find_month(weight_of_months, i) :
+#     month = len(weight_of_months) //2
+
+#     while not (weight_of_months[month-1] < i <= weight_of_months[month]) :
+
+#         if i > weight_of_months[month] :
+            
+#            month = (len(weight_of_months) + month) //2
+
+#         elif i < weight_of_months[month] :
+#             month = (0 + month) //2
+
+#     return month
+
+
+def find_alter(month, date, days, X, H, last_d_of_months) :
     found = False
-    extra_holiday = 0
+    t = 0 
     
-    if days[current_day_idx] == '토':
-        while month > -1 and not found:
-            for d in range(date, 0, -1):
-                if is_normalday(holidays, [month + 1, d], days[current_day_idx]):
+    if days[X] == '토' :
+        while month > -1 and not found :
+            for d in range(date, 0, -1) :
+                if is_normalday(H, [month+1, d], days[X]) : #주말도 공휴일도 아님
                     found = True
-                    extra_holiday = 1  # 과거로 이동하므로 추가
-                    holidays.append([month + 1, d])  # 임시 공휴일 지정
+                    t=1 #과거로 가기 때문에 추가 입력
+                    H.append([month+1, d]) # 임시 공휴일 지정
                     break
-                current_day_idx = (current_day_idx - 1) % 7
-            month -= 1
-            date = last_days_of_months[month]
+                X = (X-1)%7
+            month-=1
+            date = last_d_of_months[month]
 
-    else:  # 일요일
-        while month < len(last_days_of_months) and not found:
-            for d in range(date, last_days_of_months[month] + 1):
-                if is_normalday(holidays, [month + 1, d], days[current_day_idx]):
+    else :
+        
+        while month < len(last_d_of_months) and not found : 
+            for d in range(date, last_d_of_months[month] +1) :
+                if is_normalday(H, [month+1, d], days[X]) : #주말도 공휴일도 아님
                     found = True
-                    holidays.append([month + 1, d])  # 임시 공휴일 지정
+                    H.append([month+1, d]) # 공휴일 지정
                     break
-                current_day_idx = (current_day_idx + 1) % 7
-            month += 1
+                X = (X+1)%7
+            month+=1
             date = 1
 
-    return extra_holiday, holidays
-
-def find_alternate_pay_day(month, pay_day, days, current_day_idx, holidays, last_days_of_months):
+    
+    return t, H
+def find_alter_p(month, Y, days, X, H, last_d_of_months) :
     found = False
     left, right = 0, 0
-    when = [0, 0]
-    tmp_day_idx = current_day_idx
+    when =[0,0]
+    t_x = X
+    df = Y # 디폴트, 값을 찾지 못했을 때
 
-    for d in range(pay_day, 0, -1):
-        if is_normalday(holidays, [month + 1, d], days[tmp_day_idx]):
+    for d in range(Y, 0, -1) :
+        if is_normalday(H, [month+1, d], days[t_x]) : #주말도 공휴일도 아님
             found = True
             when[0] = d
             break
-        tmp_day_idx = (tmp_day_idx - 1) % 7
-        left += 1
 
-    tmp_day_idx = current_day_idx
-    for d in range(pay_day, last_days_of_months[month] + 1):
-        if is_normalday(holidays, [month + 1, d], days[tmp_day_idx]):
+        t_x = (t_x-1)%7
+        left+=1
+
+    t_x = X
+    for d in range(Y, last_d_of_months[month] +1) :
+        if is_normalday(H, [month+1, d], days[t_x]) : #주말도 공휴일도 아님
             found = True
             when[1] = d
             break
-        right += 1
-        tmp_day_idx = (tmp_day_idx + 1) % 7
 
-    if found:
-        if left > right:
+        right+=1
+        t_x = (t_x+1)%7
+
+    print(left, right, when)
+    if found :
+        if left > right :
             return when[1]
-        elif left < right:
+        elif left < right :
             return when[0]
-        else:
-            return when[0] if days[current_day_idx] == '토' else when[1]
-    else:
-        return pay_day
+        else :
+            if days[X] == '토' :
+                return when[0]
+            else :
+                return when[1]
+    else :
+        return df
 
-def solution(X, holidays, pay_day):
-    last_days_of_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    days = ['월', '화', '수', '목', '금', '토', '일']
+def solution(X, H, Y):
+    last_d_of_months =[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    # weight_of_months = find_weight_of_month(last_d_of_months)
+    days = ['일', '월', '화', '수', '목', '금', '토']
     total_break = 0
-    on_time_pay_days = []
-    current_day_idx = (X - 1) % len(days)
-    day_counter = current_day_idx
+    on_time = []
+    X%= len(days)
+    tx = X
 
-    for month in range(len(last_days_of_months)):
-        for date in range(1, last_days_of_months[month] + 1):
-            today = [month + 1, date]
-            if is_holiday(holidays, today) and is_weekend(days[day_counter]):
-                extra_holiday, holidays = find_alternate_day(month, date, days, day_counter, holidays, last_days_of_months)
-                total_break += (1 + extra_holiday)
-            elif is_holiday(holidays, today) or is_weekend(days[day_counter]):
-                total_break += 1
-            else:
-                if date == pay_day:
-                    on_time_pay_days.append(month)
+    for month in range(len(last_d_of_months)) :
+        for date in range(1, last_d_of_months[month]+1) :
 
-            day_counter = (day_counter + 1) % len(days)
+            isHoliday = is_holiday(H, [month+1, date])
+            isWeekend = is_weekend(days[tx])
 
-    pay_dates = []
-    current_day_idx = (X - 1) % len(days)
-    for month in range(len(last_days_of_months)):
-        if month in on_time_pay_days:
-            pay_dates.append(pay_day)
-        else:
-            adjusted_pay_day = find_alternate_pay_day(month, pay_day, days, (current_day_idx + pay_day - 1) % len(days), holidays, last_days_of_months)
-            pay_dates.append(adjusted_pay_day)
+            if isHoliday and isWeekend:
+                t, H = find_alter(month, date, days, tx, H, last_d_of_months)
+                total_break+=(1+t)
+            
+            elif isHoliday or isWeekend:
+                total_break+=1
 
-        current_day_idx = (current_day_idx + last_days_of_months[month]) % len(days)
+            else : # 아무날도 아닌 날은 월급을 받을 수 있음
+                if date == Y :
+                    on_time.append(month)
 
-    return pay_dates
+            tx = (tx+1)%len(days)
+
+    print(H)
+    pay_day = []
+    tx = X
+    for month in range(len(last_d_of_months)) :
+        if month in on_time :
+            pay_day.append(Y)
+        else :
+            pay_day.append(find_alter_p(month, Y, days, (tx+Y-1)%len(days), H, last_d_of_months))
+
+        tx = (tx+last_d_of_months[month])%len(days)
+
+    print(pay_day)
+
+    return pay_day
+
+
+
+########################################## 1
+# def is_weekend(d) :
+#     if d == '일' or d == '토' :
+#         return True
+#     else :
+#         return False
+
+
+# def solution(X):
+#     last_d_of_months =[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+#     # weight_of_months = find_weight_of_month(last_d_of_months)
+#     days = ['일', '월', '화', '수', '목', '금', '토']
+#     total_break = 0
+#     on_time = []
+#     X%= len(days)
+#     tx = X
+
+#     for month in range(len(last_d_of_months)) :
+#         for date in range(1, last_d_of_months[month]+1) :
+#             isWeekend = is_weekend(days[tx])
+#             if isWeekend:
+#                 total_break+=1
+
+#             tx = (tx+1)%len(days)
+
+#     return total_break
+
+
+
+
+################################################2
+# def is_weekend(d) :
+#     if d == '일' or d == '토' :
+#         return True
+#     else :
+#         return False
+
+# def is_holiday(H, today) :
+#     if  today in H :
+#         return True
+#     else :
+#         return False
+
+
+# def solution(X, H):
+#     last_d_of_months =[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+#     # weight_of_months = find_weight_of_month(last_d_of_months)
+#     days = ['일', '월', '화', '수', '목', '금', '토']
+#     total_break = 0
+#     on_time = []
+#     X%= len(days)
+#     tx = X
+
+#     for month in range(len(last_d_of_months)) :
+#         for date in range(1, last_d_of_months[month]+1) :
+
+#             isHoliday = is_holiday(H, [month+1, date])
+#             isWeekend = is_weekend(days[tx])
+
+#             if isHoliday:
+#                 total_break+=(1)
+            
+#             elif isWeekend:
+#                 total_break+=1
+#             tx = (tx+1)%len(days)
+        
+#     return total_break
+
+
+######################################################## 3차
+
+# def find_alter(month, date, days, X, H, last_d_of_months) :
+#     found = False
+#     t = 0 
+    
+#     if days[X] == '토' :
+#         while month > -1 and not found :
+#             for d in range(date, 0, -1) :
+#                 if is_normalday(H, [month+1, d], days[X]) : #주말도 공휴일도 아님
+#                     found = True
+#                     t=1 #과거로 가기 때문에 추가 입력
+#                     H.append([month+1, d]) # 임시 공휴일 지정
+#                     break
+#                 X = (X-1)%7
+#             month-=1
+#             date = last_d_of_months[month]
+
+#     else :
+        
+#         while month < len(last_d_of_months) and not found : 
+#             for d in range(date, last_d_of_months[month] +1) :
+#                 if is_normalday(H, [month+1, d], days[X]) : #주말도 공휴일도 아님
+#                     found = True
+#                     H.append([month+1, d]) # 공휴일 지정
+#                     break
+#                 X = (X+1)%7
+#             month+=1
+#             date = 1
+
+    
+#     return t, H
+
+# def find_alter(month, date, days, X, H, last_d_of_months) :
+#     found = False
+#     t = 0 
+    
+#     if days[X] == '토' :
+#         while month > -1 and not found :
+#             for d in range(date, 0, -1) :
+#                 if is_normalday(H, [month+1, d], days[X]) : #주말도 공휴일도 아님
+#                     found = True
+#                     t=1 #과거로 가기 때문에 추가 입력
+#                     H.append([month+1, d]) # 임시 공휴일 지정
+#                     break
+#                 X = (X-1)%7
+#             month-=1
+#             date = last_d_of_months[month]
+
+#     else :
+        
+#         while month < len(last_d_of_months) and not found : 
+#             for d in range(date, last_d_of_months[month] +1) :
+#                 if is_normalday(H, [month+1, d], days[X]) : #주말도 공휴일도 아님
+#                     found = True
+#                     H.append([month+1, d]) # 공휴일 지정
+#                     break
+#                 X = (X+1)%7
+#             month+=1
+#             date = 1
+
+    
+#     return t, H
+
+# def solution(X, H):
+#     last_d_of_months =[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+#     # weight_of_months = find_weight_of_month(last_d_of_months)
+#     days = ['일', '월', '화', '수', '목', '금', '토']
+#     total_break = 0
+#     on_time = []
+#     X%= len(days)
+#     tx = X
+
+#     for month in range(len(last_d_of_months)) :
+#         for date in range(1, last_d_of_months[month]+1) :
+
+#             isHoliday = is_holiday(H, [month+1, date])
+#             isWeekend = is_weekend(days[tx])
+
+#             if isHoliday and isWeekend:
+#                 t, H = find_alter(month, date, days, tx, H, last_d_of_months)
+#                 total_break+=(1+t)
+            
+#             elif isHoliday or isWeekend:
+#                 total_break+=1
+
+
+#             tx = (tx+1)%len(days)
+
+   
+#     return total_break
