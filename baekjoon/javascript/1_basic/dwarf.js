@@ -25,9 +25,7 @@ rl.on('close', ()=>{
 function solve(sum, dwarf){
     
     for(let i =0;i<dwarf.length;i++){
-        for(let j =0;j<dwarf.length;j++){
-            if(i===j) continue;
-            
+        for(let j =i+1;j<dwarf.length;j++){    
             if(sum - dwarf[i] - dwarf[j] === 100){
                 let result = [];
                 for (let index = 0 ; index < dwarf.length; index++){
@@ -38,10 +36,4 @@ function solve(sum, dwarf){
             }
         }
     }
-    
 }
-
-
-
-///////////////////////////////////////////////////////
-
