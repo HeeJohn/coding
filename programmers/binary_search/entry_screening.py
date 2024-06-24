@@ -22,8 +22,10 @@ def solution(n, times):
     while(1):
         count=0
         mid=(min_t+max_t)//2
+
         for i in times:
             count+=(mid//i)
+            
         if(count>=n):
             max_t=mid
         elif(count<n):
@@ -31,6 +33,5 @@ def solution(n, times):
         if(min_t==max_t-1):
             answer=max_t
             break
-
 
     return answer
