@@ -23,43 +23,39 @@ rl.on('line', (line)=>{
     // 3 3 3            // 3        // 6            // 9                // 14
     // 4 4 4 4          // 4        // 10           //16                // 30
 
-// 3 ~ 7
-// 
+// counter >= high 이면 끝
+// 대신, ( counter - high )   *i; 를 빼준다. 
+
+
+// 3 ~ 7 구간이라고 한다면,
+// 1 ~ 2 구간을 구한다. -> 따로 저장 (jonk1)
+// 3 ~ 7 구간을 구한다. -> 이어서 저장 (junk2)
 
 // 1 ~ 7 까지의 합에서 1 ~2를 빼면, 3 ~ 7까지의 합이 나온다.
 
 
-function sumEach(i){
-    return i*i;
-}
-
-function sumTotal(sum, currentSum){
-    return sum+=currentSum;
-}
-
-function trackCounter(tracker, i){
-    return tracker +=i;
-}
 
 function solve(input){
-    let low = input[0];
+    let low = input[0] -1;
     let high = input[1];
 
-    let tracker = 0;
+    let sum = 0;
+    let counter =0;
     let i =1;
+
+    while(counter < high){
+        sum+= (i*i); // 1, 5, 14, 30, 55, 91
+        counter += i; // 1, 3, 6, 10, 15, 21    
+
+        if(counter >= low && counter -i < low){
+            sum = (counter - low) * i;
+        }
     
-    while(tracker <= high-1){
-        
+       i++;
     }
 
-    let counter = 0;
-    let currentSum = 0;
-
-    for(let i = 1 ;i<=high; i++){
-        currentSum = sumEach(i);
-        sum = sumTotal(sum, currentSum);
-        console.log(sum);
-    }
+    sum -= (counter - high) * (i-1);
+    return  sum ;
 }
 
 
