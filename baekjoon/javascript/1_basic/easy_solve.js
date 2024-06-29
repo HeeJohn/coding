@@ -41,7 +41,6 @@ function trackCounter(tracker, i){
     return tracker +=i;
 }
 
-
 function solve(input){
     let low = input[0];
     let high = input[1];
@@ -50,10 +49,9 @@ function solve(input){
     let i =1;
     
     while(tracker <= high-1){
-
+        
     }
 
-    
     let counter = 0;
     let currentSum = 0;
 

@@ -6,17 +6,18 @@ const rl = readline.createInterface({
 });
 
 
-let input;
+let input = [];
 
-rl.on('line',(line) => {
+rl.on('line', (line) => {
     input.push(parseInt(line));
 });
 
 
-
-rl.close("close", ()=>{
+rl.on("close", ()=>{
     let result = solve(input);
-    result.forEach((output)=>console.log(output));
+    result.forEach((output)=>
+        console.log(output)
+    );
 });
 
 
@@ -28,11 +29,11 @@ function isPrime(num){
 
     for(let i = 2; i<=Math.sqrt(num); i++){
         if(num%i === 0){
-            return true;
+            return false;
         }
     }
 
-    return false;
+    return true;
 }
 
 function solve(input){
@@ -47,7 +48,7 @@ function solve(input){
     }
     
     if(minPrime === 0){
-        return -1;
+        return [-1];
     }else{
         return [sum, minPrime];
     }
