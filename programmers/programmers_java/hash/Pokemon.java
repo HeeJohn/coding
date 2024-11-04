@@ -10,8 +10,6 @@ public class Pokemon {
             set.add(num);
         }
 
-        System.out.println(5 / 2f);
-
         return Math.min(set.size(), nums.length / 2);
     }
 }
