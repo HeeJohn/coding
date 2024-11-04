@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
-public class Test2 {
+public class SecretCode {
         public static void main(String[] args) throws Exception {
             Scanner sc = new Scanner(System.in);
             String type = sc.next();
