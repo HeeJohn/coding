@@ -76,3 +76,155 @@ class FindPrime {
 
 
 }
+
+
+//import java.util.Set;
+//import java.util.HashSet;
+//import java.util.Stack;
+//
+//class Solution {
+//    public int solution(String numbers){
+//        Set<Integer> comp  = new HashSet<>();
+//
+//        for(int i=1; i<= numbers.length(); i++){
+//            permute(comp, i, numbers);
+//        }
+//
+//        int counter = 0;
+//
+//        for(Integer num : comp){
+//            if(isPrime(num)) counter++;
+//        }
+//
+//
+//        return counter;
+//    }
+//
+//
+//    private void permute(Set<Integer> comp, int length, String numbers){
+//        Stack<PermuteState> stack = new Stack<>();
+//        stack.push(new PermuteState("", numbers));
+//
+//        while(!stack.isEmpty()){
+//            PermuteState current = stack.pop();
+//            String prefix = current.prefix;
+//            String remaining = current.remaining;
+//
+//            if(prefix.length() == length) {
+//                comp.add(Integer.parseInt(prefix));
+//                continue;
+//            }
+//
+//            for(int i=0;i<remaining.length(); i++){
+//
+//                PermuteState newState = new PermuteState(
+//                        prefix+remaining.charAt(i),
+//                        remaining.substring(0,i)+remaining.substring(i+1, remaining.length())
+//                );
+//
+//                stack.push(newState);
+//            }
+//        }
+//
+//    }
+//
+//
+//
+//    private boolean isPrime(int number){
+//        if(number<2) return false;
+//
+//        for(int i=2 ;i<=Math.sqrt(number); i++){
+//            if(number%i ==0) return false;
+//        }
+//
+//        return true;
+//    }
+//
+//}
+//
+//class PermuteState{
+//    String prefix;
+//    String remaining;
+//
+//    PermuteState(String prefix, String remaining){
+//        this.prefix = prefix;
+//        this.remaining = remaining;
+//    }
+//}
+
+
+
+//import java.util.Set;
+//import java.util.HashSet;
+//import java.util.Queue;
+//import java.util.LinkedList;
+//
+//class Solution {
+//    public int solution(String numbers){
+//        Set<Integer> comp  = new HashSet<>();
+//
+//        for(int i=1; i<= numbers.length(); i++){
+//            permute(comp, i, numbers);
+//        }
+//
+//        int counter = 0;
+//
+//        for(Integer num : comp){
+//            if(isPrime(num)) counter++;
+//        }
+//
+//
+//        return counter;
+//    }
+//
+//
+//    private void permute(Set<Integer> comp, int length, String numbers){
+//        Queue<PermuteState> q = new LinkedList<>();
+//        q.add(new PermuteState("", numbers));
+//
+//        while(!q.isEmpty()){
+//            PermuteState current = q.poll();
+//            String prefix = current.prefix;
+//            String remaining = current.remaining;
+//
+//            if(prefix.length() == length) {
+//                comp.add(Integer.parseInt(prefix));
+//                continue;
+//            }
+//
+//            for(int i=0;i<remaining.length(); i++){
+//
+//                PermuteState newState = new PermuteState(
+//                        prefix+remaining.charAt(i),
+//                        remaining.substring(0,i)+remaining.substring(i+1, remaining.length())
+//                );
+//
+//                q.add(newState);
+//            }
+//        }
+//
+//    }
+//
+//
+//
+//    private boolean isPrime(int number){
+//        if(number<2) return false;
+//
+//        for(int i=2;i<=Math.sqrt(number); i++){
+//            if(number%i ==0) return false;
+//        }
+//
+//        return true;
+//    }
+//
+//}
+//
+//class PermuteState{
+//    String prefix;
+//    String remaining;
+//
+//    PermuteState(String prefix, String remaining){
+//        this.prefix = prefix;
+//        this.remaining = remaining;
+//    }
+//}
