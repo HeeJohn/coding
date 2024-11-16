@@ -1,4 +1,4 @@
-package gready;
+package brute_force;
 
 // 가로 길이 >= 세로 길이
 // brown이 겉, yellow 속

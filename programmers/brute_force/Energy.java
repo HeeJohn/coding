@@ -1,4 +1,4 @@
-package gready;
+package brute_force;
 
 // 던전 시작 최소 조건 : 1. 최소 필요 피로도
 // 던전 마쳤을 때 : 소모 피로도

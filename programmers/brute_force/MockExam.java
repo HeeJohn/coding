@@ -1,4 +1,4 @@
-package gready;
+package brute_force;
 
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package gready;
+package brute_force;
 
 class MinSquare{
     public int solution(int[][] size){
