@@ -1,4 +1,4 @@
-package gready;
+package programmers_java.gready;
 
 import java.util.Arrays;
 

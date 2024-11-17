@@ -1,4 +1,4 @@
-package brute_force;
+package programmers_java.brute_force;
 
 
 import java.util.HashSet;

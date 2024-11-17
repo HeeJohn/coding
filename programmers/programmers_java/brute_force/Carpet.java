@@ -1,4 +1,4 @@
-package brute_force;
+package programmers_java.brute_force;
 
 // 가로 길이 >= 세로 길이
 // brown이 겉, yellow 속

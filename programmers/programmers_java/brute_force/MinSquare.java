@@ -1,4 +1,4 @@
-package brute_force;
+package programmers_java.brute_force;
 
 class MinSquare{
     public int solution(int[][] size){

@@ -1,4 +1,4 @@
-package gready;
+package programmers_java.gready;
 
 
 // 바로 앞번호 학생이나 바로 뒷번호의 학생에게만 체육복을 빌려줄 수 있음
